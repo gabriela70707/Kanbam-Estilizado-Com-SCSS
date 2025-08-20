@@ -1,0 +1,12 @@
+@use './variaveis.scss' as *;
+
+.coluna{
+    background-color: $backgound;
+    border: 1px solid #363636;
+    padding: 1rem;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1 1 320px; //O 1 1 é binario dizendo que podemos aumentar e diminuir
+}
