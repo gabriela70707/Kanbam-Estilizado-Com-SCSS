@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function CadTarefa() {
     const [descricao, setDescricao] = useState("");
@@ -7,6 +9,17 @@ export function CadTarefa() {
     const [usuario, setUsuario] = useState("");
     const [prioridade, setPrioridade] = useState("");
     const [usuarios, setUsuarios] = useState([]);
+
+
+    //validações
+    const schemaCadTarefa = z.object({
+        tarefa: z.string()
+        .regex(/^.{3,210}$/,{
+            message: "Digite no minimo 3 caracteres e no maximo 210 caracteres"
+        })
+    })
+
+
 
     useEffect(() => {
         axios.get("http://localhost:8000/usuarios")
