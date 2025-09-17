@@ -71,66 +71,74 @@ export function CadTarefa() {
 
 
     return (
-        <form className="formulario" onSubmit={handleSubmit(onSubmit)}>
-            <h1 className="titulo">Cadastro de Tarefas</h1>
+        <section className="container">
+            <form className="formulario" onSubmit={handleSubmit(onSubmit)}>
 
-            <label>Descrição:</label>
-            <textarea
-                {...register("descricao")}
-                onChange={(e) => {
-                    setDescricaoLength(e.target.value.length);
-                    e.target.style.height = "auto"; {/*Reseta a altura do campo de texto para o valor mínimo necessário.*/ }
-                    e.target.style.height = `${e.target.scrollHeight}px`; {/*Define a altura do campo de texto com base na quantidade de conteúdo que ele precisa exibir.*/ }
-                }}
-                rows={1}
-                style={{ resize: "none", overflow: "hidden", width: "100%" }}
-            />
-            <div style={{ fontSize: "0.9rem", color: descricaoLength > 210 ? "red" : "gray" }}>
-                {descricaoLength}/210 caracteres {/*Demonstração visual exemplo 33/210*/}
-            </div>
-            {errors.descricao && <span>{errors.descricao.message}</span>}
+                <h1 className="titulo">Cadastro de Tarefas</h1>
+                <p className="subtitulo">Preencha os dados abaixo para criar as Tarefas</p>
 
-            <label>Setor:</label>
-            <textarea
-                {...register("setor")}
-                onChange={(e) => {
-                    setSetorLength(e.target.value.length);
-                    e.target.style.height = "auto";
-                    e.target.style.height = `${e.target.scrollHeight}px`;
-                }}
-                rows={1}
-                style={{ resize: "none", overflow: "hidden", width: "100%" }}
-            />
-            <div style={{ fontSize: "0.9rem", color: setorLength > 150 ? "red" : "gray" }}>
-                {setorLength}/150 caracteres
-            </div>
-            {errors.setor && <span style={{ color: "red" }}>{errors.setor.message}</span>}
+                <div className="campo">
+                    <label>Descrição:</label>
+                    <textarea
+                        placeholder="Insira a descrição da Tarefa"
+                        {...register("descricao")}
+                        onChange={(e) => {
+                            setDescricaoLength(e.target.value.length);
+                            e.target.style.height = "auto"; {/*Reseta a altura do campo de texto para o valor mínimo necessário.*/ }
+                            e.target.style.height = `${e.target.scrollHeight}px`; {/*Define a altura do campo de texto com base na quantidade de conteúdo que ele precisa exibir.*/ }
+                        }}
+                        rows={1}
+                        style={{ resize: "none", overflow: "hidden", width: "100%" }}
+                    />
+                    <div style={{ fontSize: "0.9rem", color: descricaoLength > 210 ? "red" : "gray" }}>
+                        {descricaoLength}/210 caracteres {/*Demonstração visual exemplo 33/210*/}
+                    </div>
+                    {errors.descricao && <span>{errors.descricao.message}</span>}
+                </div>
 
+                <div className="campo">
+                    <label>Setor:</label>
+                    <textarea
+                        placeholder="Ex: TI"
+                        {...register("setor")}
+                        onChange={(e) => {
+                            setSetorLength(e.target.value.length);
+                            e.target.style.height = "auto";
+                            e.target.style.height = `${e.target.scrollHeight}px`;
+                        }}
+                        rows={1}
+                        style={{ resize: "none", overflow: "hidden", width: "100%" }}
+                    />
+                    <div style={{ fontSize: "0.9rem", color: setorLength > 150 ? "red" : "gray" }}>
+                        {setorLength}/150 caracteres
+                    </div>
+                    {errors.setor && <span style={{ color: "red" }}>{errors.setor.message}</span>}
+                </div>
 
+                <div className="campo">
+                    <label>Usuário</label>
+                    <select {...register("usuario")}>
+                        <option value="">Selecione o Usuário</option>
+                        {usuarios.map((u) => (
+                            <option key={u.id} value={u.id}>
+                                {u.nome} - {u.email}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.usuario && <span>{errors.usuario.message}</span>}
 
-            <label>Usuário</label>
-            <select {...register("usuario")}>
-                <option value="">Selecione o Usuário</option>
-                {usuarios.map((u) => (
-                    <option key={u.id} value={u.id}>
-                        {u.nome} - {u.email}
-                    </option>
-                ))}
-            </select>
-            {errors.usuario && <span>{errors.usuario.message}</span>}
-
-            <label>Prioridade</label>
-            <select {...register("prioridade")}>
-                <option value="">Selecione a Prioridade</option>
-                <option value="Alta">Alta</option>
-                <option value="Media">Media</option>
-                <option value="Baixa">Baixa</option>
-            </select>
-            {errors.prioridade && <span>{errors.prioridade.message}</span>}
-
-            <button type="submit">Cadastrar</button>
-        </form>
-
+                    <label>Prioridade</label>
+                    <select {...register("prioridade")}>
+                        <option value="">Selecione a Prioridade</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Media">Media</option>
+                        <option value="Baixa">Baixa</option>
+                    </select>
+                    {errors.prioridade && <span>{errors.prioridade.message}</span>}
+                </div>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
     );
 }
 

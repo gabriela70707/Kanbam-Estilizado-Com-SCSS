@@ -27,7 +27,7 @@ const StyledWrapper = styled.div`
   .button {
     --border-right: 6px;
     --text-stroke-color: rgba(255,255,255,0.6);
-    --animation-color: #f8a2edff;
+    --animation-color: #0056b3  ;
     --fs-size: 2em;
     letter-spacing: 3px;
     text-decoration: none;
