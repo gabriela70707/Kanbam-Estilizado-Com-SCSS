@@ -19,14 +19,22 @@ export function CadTarefa() {
 
     //validações
     const schemaCadTarefa = z.object({
+
+        titulo: z.string().trim().min(1, "Título é obrigatório").max(100, "Máximo de 100 caracteres")
+            .regex(/^(?!.* {2}).*$/, {
+                message: "Coloque espaços somente onde necessário"
+                //^(?!.* {2}) → nega a presença de dois espaços consecutivos em qualquer lugar da string.
+                //$ → garante que a verificação seja feita até o fim da string.
+            }),
+
         descricao: z.string().trim().min(5, "Mínimo de 5 caracteres (sem contar espaços)").max(210, "Máximo de 210 caracteres")
-            .regex(/^(?!.* {2})$/, {
+            .regex(/^(?!.* {2}).*$/, {
                 message: "Coloque espaços somente onde necessário"
                 //^(?!.* {2}) → nega a presença de dois espaços consecutivos em qualquer lugar da string.
                 //$ → garante que a verificação seja feita até o fim da string.
             }),
         setor: z.string().trim().min(1, "Setor é obrigatório e não pode conter apenas espaços").max(30, "Máximo de 30 caracteres")
-            .regex(/^(?!.* {2})$/, {
+            .regex(/^(?!.* {2}).*$/, { //permite qualquer conteudo
                 message: "Coloque espaços somente onde necessário"
                 //^(?!.* {2}) → nega a presença de dois espaços consecutivos em qualquer lugar da string.
                 //$ → garante que a verificação seja feita até o fim da string.
@@ -55,6 +63,7 @@ export function CadTarefa() {
 
     const onSubmit = (data) => {
         const novaTarefa = {
+            titulo: data.titulo,
             descricao_tarefa: data.descricao,
             nome_setor: data.setor,
             id_usuario: parseInt(data.usuario),
@@ -76,6 +85,17 @@ export function CadTarefa() {
 
                 <h1 className="titulo">Cadastro de Tarefas</h1>
                 <p className="subtitulo">Preencha os dados abaixo para criar as Tarefas</p>
+
+                <div className="campo">
+                    <label>Título:</label>
+                    <input
+                        type="text"
+                        placeholder="Insira o título da tarefa"
+                        {...register("titulo")}
+                    />
+                    {errors.titulo && <span>{errors.titulo.message}</span>}
+                </div>
+
 
                 <div className="campo">
                     <label>Descrição:</label>

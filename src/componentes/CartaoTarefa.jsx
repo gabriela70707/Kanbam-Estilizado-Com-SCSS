@@ -23,7 +23,7 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
         <div className="tarefa-cabecalho">
           <h3>{tarefa.titulo}</h3>
           <div className="tarefa-acoes">
-            <button 
+            <button
               className="botao-opcoes"
               onClick={() => setMostrarOpcoes(!mostrarOpcoes)}
             >
@@ -31,21 +31,17 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
             </button>
             {mostrarOpcoes && (
               <div className="menu-opcoes">
-                <button onClick={() => setMostrarModal(true)}>
-                  ✏️ Editar
-                </button>
-                <button onClick={handleDeletar}>
-                  🗑️ Excluir
-                </button>
+                <button onClick={() => setMostrarModal(true)}>Editar</button>
+                <button onClick={handleDeletar}> Excluir </button>
                 <div className="menu-divisor"></div>
                 <button onClick={() => handleStatusChange("A Fazer")}>
-                  ↪️ Mover para A Fazer
+                  Mover para A Fazer
                 </button>
                 <button onClick={() => handleStatusChange("Fazendo")}>
-                  🔄 Mover para Fazendo
+                  Mover para Fazendo
                 </button>
                 <button onClick={() => handleStatusChange("Pronta")}>
-                  ✅ Mover para Pronta
+                  Mover para Pronta
                 </button>
               </div>
             )}

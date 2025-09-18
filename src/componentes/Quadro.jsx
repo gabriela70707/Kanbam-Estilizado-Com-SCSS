@@ -24,7 +24,7 @@ export function Quadro() {
 
   const handleAtualizarTarefa = async (id, dadosAtualizados) => {
     try {
-      await axios.patch(`http://127.0.0.1:8000/tarefas/${id}`, dadosAtualizados);
+      await axios.patch(`http://127.0.0.1:8000/tarefas/${id}/status`, dadosAtualizados);
       carregarTarefas();
     } catch (error) {
       console.error("Erro ao atualizar tarefa:", error);
