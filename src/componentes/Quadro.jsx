@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Coluna } from "./Coluna";
 
+//area que permite o uso do Drag and Drop
+import { DndContext } from "@dnd-kit/core";
+
 export function Quadro() {
   const [todasTarefas, setTarefas] = useState([]);
   const [carregando, setCarregando] = useState(true);
@@ -43,6 +46,25 @@ export function Quadro() {
     }
   };
 
+
+  function handleDragEnd(event){
+    const {active, over } = event
+    if(over && active){
+      const tarefasID = active.id
+      const novaColuna = over.id // onde ela foi solta
+
+      setTarefas(prev => 
+        prev.map(tarefa => 
+          tarefa.id === tarefasID ? {...tarefa, status: novaColuna} : tarefa
+        )
+      );
+
+      axios.patch(`http://127.0.0.1:8000/tarefas/${tarefasID}/status`, {
+        status : novaColuna
+      }) .catch(err => console.error("é deu ruim", err))
+    }
+  }
+
   const tarefasAFazer = todasTarefas.filter((t) => t.status === "A Fazer");
   const tarefasEmAndamento = todasTarefas.filter((t) => t.status === "Fazendo");
   const tarefasFinalizadas = todasTarefas.filter((t) => t.status === "Pronta");
@@ -59,28 +81,33 @@ export function Quadro() {
   }
 
   return (
-    <main className="quadro">
-      <h1>Quadro de Tarefas</h1>
-      <div className="colunas">
-        <Coluna
-          titulo="A Fazer"
-          tarefas={tarefasAFazer}
-          onAtualizarTarefa={handleAtualizarTarefa}
-          onDeletarTarefa={handleDeletarTarefa}
-        />
-        <Coluna
-          titulo="Em Andamento"
-          tarefas={tarefasEmAndamento}
-          onAtualizarTarefa={handleAtualizarTarefa}
-          onDeletarTarefa={handleDeletarTarefa}
-        />
-        <Coluna
-          titulo="Finalizado"
-          tarefas={tarefasFinalizadas}
-          onAtualizarTarefa={handleAtualizarTarefa}
-          onDeletarTarefa={handleDeletarTarefa}
-        />
-      </div>
-    </main>
+    <DndContext onDragEnd={handleDragEnd}>
+      <main className="quadro">
+        <h1>Quadro de Tarefas</h1>
+        <div className="colunas">
+          <Coluna
+            id = 'A Fazer'
+            titulo="A Fazer"
+            tarefas={tarefasAFazer}
+            onAtualizarTarefa={handleAtualizarTarefa}
+            onDeletarTarefa={handleDeletarTarefa}
+          />
+          <Coluna
+            id = 'Fazendo'
+            titulo="Em Andamento"
+            tarefas={tarefasEmAndamento}
+            onAtualizarTarefa={handleAtualizarTarefa}
+            onDeletarTarefa={handleDeletarTarefa}
+          />
+          <Coluna
+            id = 'Pronta'
+            titulo="Finalizado"
+            tarefas={tarefasFinalizadas}
+            onAtualizarTarefa={handleAtualizarTarefa}
+            onDeletarTarefa={handleDeletarTarefa}
+          />
+        </div>
+      </main>
+    </DndContext>
   );
 }

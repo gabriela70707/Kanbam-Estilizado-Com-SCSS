@@ -1,9 +1,35 @@
 import { useState } from "react";
 import { ModalEditarTarefa } from "./ModalEditarTarefa";
+import { ModalDetalhes } from "./ModalDetalhes"
+// biblioteca que permite o drag and drop - items que são movimentados
+import { useDraggable } from "@dnd-kit/core";
+
+//criando um portal para redenrizar o modal diretamente no body e nao no card
+import { createPortal } from "react-dom";
 
 export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarDetalhe, setMostrarDetalhe] = useState(false);
   const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
+
+  // inserindo o controle atual do meu card
+  //setNodeRef: é o que liga o elemento arrastavel, ao DOM ele que dá acesso ao elemento
+  // listerners: é o fofoqueiro ele fica escutando quando a ação começa e termina
+  //attributes: é o que di que pode ser movimentados pelo teclado ou mouse
+  // transform: é o que da a sensação de arrasto
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: tarefa.id,
+  })
+  // ele controla as posições do plano cartesiano. Ele pega as coordenadas X e Y e vai 
+  // dar a impressão ao usuário do movimento do mouse
+  const style = transform
+    ? {
+      transform: `translate(${transform.x}px, ${transform.y}px)`,
+      zIndex: 1000, // evitar que a tarefa passe por de tras das colunas
+      position: "absolute", // deixa o card menorzinho quando ele esta sendo arrastado
+    }
+    : undefined;
+
 
   const handleStatusChange = (novoStatus) => {
     onAtualizarTarefa(tarefa.id, { status: novoStatus });
@@ -19,7 +45,13 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
 
   return (
     <>
-      <div className="tarefa">
+      <div className="tarefa" ref={setNodeRef} style={style} onClick={() => setMostrarDetalhe(!mostrarDetalhe)}>
+        {mostrarDetalhe && createPortal(
+          <ModalDetalhes 
+            tarefa = {tarefa}
+          />,
+          document.body // renderizar o elemento diretamente no body para evitar bugs na tela
+        )}
         <div className="tarefa-cabecalho">
           <h3>{tarefa.titulo}</h3>
           <div className="tarefa-acoes">
@@ -33,16 +65,6 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
               <div className="menu-opcoes">
                 <button onClick={() => setMostrarModal(true)}>Editar</button>
                 <button onClick={handleDeletar}> Excluir </button>
-                <div className="menu-divisor"></div>
-                <button onClick={() => handleStatusChange("A Fazer")}>
-                  Mover para A Fazer
-                </button>
-                <button onClick={() => handleStatusChange("Fazendo")}>
-                  Mover para Fazendo
-                </button>
-                <button onClick={() => handleStatusChange("Pronta")}>
-                  Mover para Pronta
-                </button>
               </div>
             )}
           </div>
@@ -56,9 +78,10 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
             </span>
           )}
         </div>
+        <div className="drag-handle" {...listeners} {...attributes}>⠿ clique aqui para arrastar</div> {/*Botao para arrastar a tarefa*/}
       </div>
 
-      {mostrarModal && (
+      {mostrarModal && createPortal(
         <ModalEditarTarefa
           tarefa={tarefa}
           onClose={() => setMostrarModal(false)}
@@ -66,7 +89,8 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
             onAtualizarTarefa(tarefa.id, dadosAtualizados);
             setMostrarModal(false);
           }}
-        />
+        />,
+        document.body // renderizar o elemento diretamente no body para evitar bugs na tela
       )}
     </>
   );

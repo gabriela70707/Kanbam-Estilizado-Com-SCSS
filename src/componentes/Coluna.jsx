@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { TarefaCard } from "./CartaoTarefa";
+// uso da biblioteca de Drag and Drop - aqui é o local de soltura
+import { useDroppable } from "@dnd-kit/core";
 
-export function Coluna({ titulo, tarefas, cor, onAtualizarTarefa, onDeletarTarefa }) {
+export function Coluna({ titulo, id, tarefas, onAtualizarTarefa, onDeletarTarefa }) {
+    //faço o uso da referencia do item no drag and drop
+    const {setNodeRef} = useDroppable({ id });
     return (
-        <div className={`coluna ${tarefas.length === 0 ? 'coluna-vazia' : ''}`}>
+        <div className={`coluna ${tarefas.length === 0 ? 'coluna-vazia' : ''}` } ref = { setNodeRef }>
             <h2>
                 {titulo}
                 <span className="contador">{tarefas.length}</span>
