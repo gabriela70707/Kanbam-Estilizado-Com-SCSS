@@ -48,9 +48,9 @@ export function CadUsuario() {
             <h1 className="titulo">Cadastro de Usuário</h1>
             <p className="subtitulo">Preencha os dados abaixo para criar sua conta</p>
 
-                <div className="campo">
-                    <label>Nome:</label>
-                    <input
+                <div className="campo"> 
+                    <label htmlFor="nome">Nome:</label> {/*Html for serve para associar uma tag a outra trazendo mais acessibilidade ao site*/}
+                    <input id="nome"
                         placeholder="Ex: Mateus Martins"
                         type="text"
                         {...register("nome")}
@@ -59,8 +59,8 @@ export function CadUsuario() {
                 </div>
 
                 <div className="campo">
-                    <label>Email:</label>
-                    <input
+                    <label htmlFor="email">Email:</label>
+                    <input id="email"
                         type="email"
                         placeholder="Ex: mateusmartins07@gmail.com"
                         {...register("email")}

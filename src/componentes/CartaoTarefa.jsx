@@ -45,9 +45,10 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
 
   return (
     <>
-      <div className="tarefa" ref={setNodeRef} style={style} onClick={() => setMostrarDetalhe(!mostrarDetalhe)}>
+      <div className="tarefa" ref={setNodeRef} style={style}>
         {mostrarDetalhe && createPortal(
           <ModalDetalhes 
+            onClose={() => setMostrarDetalhe(false)}
             tarefa = {tarefa}
           />,
           document.body // renderizar o elemento diretamente no body para evitar bugs na tela
@@ -70,6 +71,7 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
           </div>
         </div>
         <p>{tarefa.descricao}</p>
+        
         <div className="meta">
           <span>#{tarefa.id}</span>
           {tarefa.prioridade && (
@@ -78,7 +80,10 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
             </span>
           )}
         </div>
-        <div className="drag-handle" {...listeners} {...attributes}>⠿ clique aqui para arrastar</div> {/*Botao para arrastar a tarefa*/}
+        <div className="opcoes-card">
+          <div className="drag-handle" {...listeners} {...attributes}>⠿ clique aqui para arrastar</div> {/*Botao para arrastar a tarefa*/}
+          <div className="detalhes" onClick={() => setMostrarDetalhe(!mostrarDetalhe)}>Ver detalhes</div> {/*Botao para arrastar a tarefa*/}
+        </div>
       </div>
 
       {mostrarModal && createPortal(
