@@ -1,12 +1,52 @@
-# React + Vite
+# 🧩 Kanban Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface moderna e responsiva para gerenciamento de tarefas em estilo Kanban. Este projeto foi desenvolvido com **React + Vite**, e se comunica com um backend em FastAPI disponível [aqui](https://github.com/gabriela70707/Kanban-BackEnd.git).
 
-Currently, two official plugins are available:
+## 📸 Demonstração
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Preview do Kanban](./public/kanban-preview.png)
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Tecnologias Utilizadas
+
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [React Router](https://reactrouter.com/)
+- [@dnd-kit/core](https://docs.dndkit.com/) – Drag and drop acessível
+- [ARIA](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) – Princípios de acessibilidade
+- [SCSS] – Estilização das páginas
+
+
+
+## ♿ Acessibilidade
+
+Este projeto segue boas práticas de acessibilidade:
+
+- Navegação por teclado (`Tab`, `Enter`, `Espaço`)
+- Uso de atributos ARIA (`aria-label`, `aria-expanded`, `role`)
+- Componentes interativos com foco e semântica correta
+
+## 🛠️ Como Rodar Localmente
+
+```bash
+# Clone o repositório
+git clone https://github.com/gabriela70707/Kanbam-Estilizado-Com-SCSS.git
+
+# Acesse a pasta
+cd Kanbam-Estilizado-Com-SCSS
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
+npm run dev
+
+O app estará disponível em http://localhost:5173.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+
+- Obrigada pela visita ✨
+
