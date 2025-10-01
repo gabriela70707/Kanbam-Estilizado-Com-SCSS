@@ -94,7 +94,7 @@
     // botao de arrastar a tarefa 
     .drag-handle {
       height: 100%;
-      color: #a3a5aa;
+      color: #646363;
       font-size: 1rem;
       padding: 2rem 0 0 0;
       cursor: grab;
@@ -124,7 +124,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: 0.8rem;
-    color: #a0aec0;
+    color: #555555;
 
     .prioridade {
       padding: 0.2rem 0.5rem;
@@ -132,18 +132,18 @@
       font-weight: 600;
 
       &.alta {
-        background: #fed7d7;
-        color: #c53030;
+        background: #e79b9b;
+        color: #9b1e1e;
       }
 
       &.media {
-        background: #feebcb;
-        color: #c05621;
+        background: #f1d29d;
+        color: #8d3a11;
       }
 
       &.baixa {
-        background: #c6f6d5;
-        color: #2f855a;
+        background: #a6f5bf;
+        color: #216945;
       }
     }
   }
@@ -168,7 +168,7 @@
 // botao de arrastar a tarefa 
 .drag-handle {
   height: 100%;
-  color: #a3a5aa;
+  color: #555555;
   font-size: 1rem;
   padding: 2rem 0 0 0;
   cursor: grab;
@@ -208,7 +208,7 @@
 }
 
 .detalhes{
-    color: #a3a5aa;
+    color: #555555;
     font-size: 0.9rem;
     cursor: pointer;
 }
