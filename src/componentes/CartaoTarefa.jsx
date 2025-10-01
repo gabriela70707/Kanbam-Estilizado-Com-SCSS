@@ -34,7 +34,7 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
   const handleStatusChange = (novoStatus) => {
     onAtualizarTarefa(tarefa.id, { status: novoStatus });
     setMostrarOpcoes(false);
-  };
+  }
 
   const handleDeletar = () => {
     if (window.confirm(`Tem certeza que deseja excluir a tarefa "${tarefa.titulo}"?`)) {
@@ -47,9 +47,9 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
     <>
       <div className="tarefa" ref={setNodeRef} style={style}>
         {mostrarDetalhe && createPortal(
-          <ModalDetalhes 
+          <ModalDetalhes
             onClose={() => setMostrarDetalhe(false)}
-            tarefa = {tarefa}
+            tarefa={tarefa}
           />,
           document.body // renderizar o elemento diretamente no body para evitar bugs na tela
         )}
@@ -59,19 +59,22 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
             <button
               className="botao-opcoes"
               onClick={() => setMostrarOpcoes(!mostrarOpcoes)}
+              aria-label="Abrir menu de opções" //acessibilidade, melhora a compreensão do leitor de tela sobre o que é esse botão
+              aria-haspopup="true"
+              aria-expanded={mostrarOpcoes}
             >
               ⋮
             </button>
             {mostrarOpcoes && (
-              <div className="menu-opcoes">
-                <button onClick={() => setMostrarModal(true)}>Editar</button>
-                <button onClick={handleDeletar}> Excluir </button>
+              <div className="menu-opcoes" role="menu">
+                <button role="menuitem" onClick={() => setMostrarModal(true)}>Editar</button>
+                <button role="menuitem" onClick={handleDeletar}> Excluir </button>
               </div>
             )}
           </div>
         </div>
         <p>{tarefa.descricao}</p>
-        
+
         <div className="meta">
           <span>#{tarefa.id}</span>
           {tarefa.prioridade && (
@@ -81,8 +84,17 @@ export function TarefaCard({ tarefa, onAtualizarTarefa, onDeletarTarefa }) {
           )}
         </div>
         <div className="opcoes-card">
-          <div className="drag-handle" {...listeners} {...attributes}>⠿ clique aqui para arrastar</div> {/*Botao para arrastar a tarefa*/}
-          <div className="detalhes" onClick={() => setMostrarDetalhe(!mostrarDetalhe)}>Ver detalhes</div> {/*Botao para arrastar a tarefa*/}
+          
+          <div className="drag-handle" 
+            role="button"
+            tabIndex={0}
+            aria-label="Arrastar tarefa" 
+            {...listeners} 
+            {...attributes}>
+              ⠿ clique aqui para arrastar
+          </div> {/*Botao para arrastar a tarefa*/}
+
+          <button className="detalhes" onClick={() => setMostrarDetalhe(!mostrarDetalhe)}>Ver detalhes</button> {/*Botao para arrastar a tarefa*/}
         </div>
       </div>
 
